@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxuryWood - Editar Mueble</title>
+    <!-- Enlaces CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2251/2251911.png " type="image/x-icon">
+    <style>
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #DEB887;
+            --accent-color: #D2691E;
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --bg-light: #faf6f2;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        body {
+             font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-light);
+    line-height: 1.6;
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .navbar-brand, .nav-link {
+            color: var(--text-light) !important;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+
+        .form-title {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .form-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        .form-label {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .form-control {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(210, 105, 30, 0.25);
+        }
+
+        .btn-custom {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: var(--accent-color);
+            color: var(--text-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: var(--text-light);
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            color: var(--text-light);
+            transform: translateY(-2px);
+        }
+
+        .preview-image {
+            max-width: 150px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-top: 1rem;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+   <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-couch"></i> LuxuryWood
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/muebles/inicio">Inicio</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="/muebles/productos">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/muebles/nosotros">Nosotros</a>
+                    </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="/muebles/contacto">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="form-container">
+            <h1 class="form-title">Editar Mueble</h1>
+            <form th:action="@{/muebles/save-mueble}" th:object="${mueble}" method="post" enctype="multipart/form-data">
+                <input type="hidden" th:field="*{id}" />
+                
+                <div class="mb-4">
+                    <label for="nombre" class="form-label">Nombre:</label>
+                    <input th:field="*{nombre}" type="text" class="form-control" name="nombre" id="nombre" 
+                           th:value="${mueble.nombre}" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="descripcion" class="form-label">Descripción:</label>
+                    <textarea th:field="*{descripcion}" class="form-control" name="descripcion" id="descripcion" 
+                              th:text="${mueble.descripcion}" rows="3"></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label for="precio" class="form-label">Precio:</label>
+                    <div class="input-group">
+                        <span class="input-group-text">S/.</span>
+                        <input th:field="*{precio}" type="number" class="form-control" step="0.01" 
+                               name="precio" id="precio" th:value="${mueble.precio}" required>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="imagen" class="form-label">Imagen:</label>
+                    <input type="file" class="form-control" name="imagen" id="imagen" accept="image/*">
+                    <div class="mt-2">
+                        <img th:if="${mueble.imagen}" th:src="@{${mueble.imagen}}" 
+                             alt="Imagen Mueble" class="preview-image">
+                    </div>
+                    <input type="hidden" name="imagenExistente" th:value="${mueble.imagen}">
+                </div>
+
+                <div class="d-flex justify-content-end gap-3">
+                    <a href="/muebles" class="btn btn-secondary">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-custom">
+                        <i class="fas fa-save me-2"></i>Guardar Cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>LuxuryWood</h4>
+                    <p>Panel de Administración</p>
+                </div>
+                <div class="col-md-4">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="/muebles/inicio">Inicio</a></li>
+                        <li><a href="/muebles/create-mueble">Crear Mueble</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h4>Soporte</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Manual de Usuario</a></li>
+                        <li><a href="#">Contactar Soporte</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <p>&copy; 2024 LuxuryWood. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
